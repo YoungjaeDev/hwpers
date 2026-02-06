@@ -26,7 +26,7 @@ pub fn extract_text_for_rag(file_path: &str) -> Result<String> {
     let text = doc.extract_text();
     let normalized = normalize_text(&text);
 
-    if normalized.len() < 50 {
+    if normalized.chars().count() < 50 {
         return Err(HwpError::InvalidFormat(
             "Extracted text too short (less than 50 characters)".to_string(),
         ));
