@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-`hwpers` is a Rust library for parsing Korean Hangul Word Processor (HWP) 5.0 files with full layout rendering support. As of v0.3.0, it includes both **reader** (parsing) and **writer** (creation) capabilities.
+`hwpers` is a Rust library for parsing Korean Hangul Word Processor (HWP) 5.0 files with full layout rendering support. As of v0.5.0, it includes **reader** (parsing), **writer** (creation), **HWPX** support, and **RAG text extraction** capabilities.
 
 ## Development Commands
 
@@ -81,6 +81,10 @@ The codebase is organized into distinct layers:
    - `compression.rs` - zlib compression/decompression
    - `encoding.rs` - UTF-16LE and other encodings
 
+7. **RAG Layer** (`src/rag.rs`)
+   - `extract_text_for_rag()` - HWP/HWPX auto-detection and text extraction
+   - `normalize_text()` - Text normalization for RAG pipelines
+
 ### Document Structure Hierarchy
 
 ```
@@ -119,6 +123,8 @@ Tests are organized in the `tests/` directory as integration tests:
 - `roundtrip_test.rs` - Write → Read verification
 - `hyperlink_test.rs`, `table_test.rs`, `image_test.rs`, etc. - Feature-specific tests
 - `serialization_test.rs` - Low-level format serialization
+- `rag_feasibility_hwp.rs`, `rag_feasibility_hwpx.rs` - RAG text extraction verification
+- `real_hwp_test.rs` - Real HWP file validation (auto-skips if test files missing)
 
 Test files are stored in `test-files/` directory (not committed to git).
 
@@ -165,5 +171,6 @@ The writer is in early development. Before working on writer features, check:
 ## Release Process
 
 Version follows semantic versioning. Recent versions:
+- v0.5.0 - HWPX support, distribution document decryption, RAG text extraction
 - v0.3.0 - Writer functionality added (partial)
 - v0.2.0 - Reader functionality
